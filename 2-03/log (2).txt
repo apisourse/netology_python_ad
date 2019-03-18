@@ -1,3 +1,0 @@
-Func_start: 2019-03-05 20:56:54.186402, Func_name: some_func, Func_arg: ('one_argument', 'two_argument'), Func_result:>>> This is some function whis some arguments
-Func_start: 2019-03-08 13:59:40.698547, Func_name: some_func, Func_arg: ('one_argument', 'two_argument'), Func_result:>>> This is some function whis some arguments
-Func_start: 2019-03-08 13:59:45.916402, Func_name: some_func, Func_arg: ('one_argument', 'two_argument'), Func_result:>>> This is some function whis some arguments
