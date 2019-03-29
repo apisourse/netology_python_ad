@@ -67,16 +67,17 @@ class SendMail():
         return email_message.items()
 
 
-login = 'test@yandex.ru'
-password = 'test'
-recipients = ['test@gmail.com', 'test@yandex.ru']
-subject = 'Some_Subject'
-message = 'Some Message'
+if __name__ == '__main__':
+    login = 'test@yandex.ru'
+    password = 'test'
+    recipients = ['test@gmail.com', 'test@yandex.ru']
+    subject = 'Some_Subject'
+    message = 'Some Message'
 
-mail = SendMail(SERVER_SMTP, SERVER_IMAP, SERVER_PORT)
+    mail = SendMail(SERVER_SMTP, SERVER_IMAP, SERVER_PORT)
 
-print(mail.send_message(login, password, recipients, subject, message))
+    print(mail.send_message(login, password, recipients, subject, message))
 
-header = 'Yandex'
-format_post_message = '(RFC822)'
-print(mail.get_message_inbox(login, password, format_post_message, header))
+    header = 'Yandex'
+    format_post_message = '(RFC822)'
+    print(mail.get_message_inbox(login, password, format_post_message, header))
