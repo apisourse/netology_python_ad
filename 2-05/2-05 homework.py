@@ -46,11 +46,9 @@ class SendMail():
             return 'successfully sent the mail'
         except Exception as e:
             raise e
-            return "failed to send mail: {}".format(e)
-        print('Все успешно')
 
     def get_message_inbox(self, login, password,
-                          header=None, format_post_message):
+                          format_post_message, header=None):
         mail = imaplib.IMAP4_SSL(SERVER_IMAP)
         mail.login(login, password)
         mail.list()
@@ -81,4 +79,4 @@ print(mail.send_message(login, password, recipients, subject, message))
 
 header = 'Yandex'
 format_post_message = '(RFC822)'
-print(mail.get_message_inbox(login, password, header, format_post_message))
+print(mail.get_message_inbox(login, password, format_post_message, header))
