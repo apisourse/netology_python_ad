@@ -1,3 +1,11 @@
 import psycopg2
+from pprint import pprint
 
-conn = psycopg2.connect("dbname=netology_db user=netology_user")
+with psycopg2.connect(database='postgres', user='artempakhomov', password='milk0990', host='localhost') as conn:
+    with conn.cursor() as curs:
+        curs.execute('SELECT * FROM product_shop')
+        pprint(curs.fetchall()) # Вывести все
+        # curs.fetchone()) # Вывести построчно
+
+# conn.rollback() # Не применять изменения
+# conn.commit() # применить изменения
