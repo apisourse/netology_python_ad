@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
         return s, c
 
-#  =================================
+#   =================================
     create_db()
     # add_student(student=import_data()[0]['Student'][7])
     add_students(courses=import_data()[1]['Course'], course_id=1, students=import_data()[0]['Student'])
