@@ -4,11 +4,6 @@ import pymongo
 from datetime import datetime
 import re
 
-# Config
-conn = pymongo.MongoClient('localhost', 27017)
-db = conn['iSourse']
-coll = db['netology_mongo']
-
 
 def read_csv(filename):
     with open(filename, encoding="utf-8") as f:
@@ -18,7 +13,7 @@ def read_csv(filename):
         return data
 
 
-def read_data(data):
+def read_data(data, coll):
     for i in data:
         coll.insert_one({
             'Artist': i[0],
@@ -30,26 +25,31 @@ def read_data(data):
         })
 
 
-def find_cheapest():
+def find_cheapest(coll):
     cheapest = coll.find().sort('Price', 1)
     for i in cheapest:
         print(f'{i["Price"]}: {i["Artist"]} в {i["Place"]}')
 
 
-def find_by_name():
-    input_artist = input('Введите название артиста')
+def find_by_name(name, coll):
     regex = re.compile()
-
-    find = coll.find({'Artist': "Tom"}).sort('Price', 1)
+    find = coll.find().sort('Price', 1)
 
 
 def run():
+    # Config
+    conn = pymongo.MongoClient('localhost', 27017)
+    db = conn['iSourse']
+    coll = db['netology_mongo']
+
+
     filename = 'artists.csv'
     data = read_csv(filename)
-    # read_data(data) #импорт данных из csv в mongo
     # coll.delete_many({}) # все снести из коллекции
-    # find_cheapest()
-    find_by_name()
+    # read_data(data, coll) #импорт данных из csv
+    # find_cheapest(coll)
+    find_by_name('Чай', coll)
+
 
 if __name__ == '__main__':
     run()
