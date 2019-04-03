@@ -1,41 +1,41 @@
+from pprint import pprint
 import csv
-from pymongo import MongoClient
+import pymongo
+from datetime import datetime
 
-client = MongoClient()
-db = client['concerts_db']
+# Config
+conn = pymongo.MongoClient('localhost', 27017)
+db = conn['iSourse']
+coll = db['netology_mongo']
+
+
 
 
 def read_csv(filename):
-    pass
+    with open(filename, encoding="utf-8") as f:
+        rows = csv.reader(f, delimiter=",")
+        next(rows)
+        data = list(rows)
+        return data
 
 
-def add_artist(artist):
-    is_exists = db.artists.find_one({'name': artist})
-    if is_exists:
-        print(f'{artist} уже существует')
-        return is_exists['_id']
-
-    res = db.artist.insert_one({'name': artist})
-    print(f'{artist} добавлен c {res["_id"]}')
-    return res.inserted_id
-
-
-def add_place():
-    pass
-
-
-def add_price():
-    pass
-
-
-def add_date():
-    pass
+def read_data(data):
+    for i in data:
+        coll.insert_one({
+            'Artist': i[0],
+            'Price': float(i[1]),
+            'Place': i[2],
+            'Data': datetime(2019,
+                             round(float(i[3]) % 1 * 100),
+                             int(float(i[3])))
+        })
 
 
 def run():
     filename = 'artists.csv'
-    pass
-
+    data = read_csv(filename)
+    read_data(data) #импорт данных из csv в mongo
+    # coll.delete_many({}) # все снести
 
 if __name__ == '__main__':
     run()
