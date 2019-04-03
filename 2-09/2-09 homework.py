@@ -30,12 +30,18 @@ def read_data(data):
                              int(float(i[3])))
         })
 
+def find_cheapest():
+    cheapest = coll.find().sort('Price', 1)
+    for i in cheapest:
+        print(i['Price'], i['Artist'])
+
 
 def run():
     filename = 'artists.csv'
     data = read_csv(filename)
-    read_data(data) #импорт данных из csv в mongo
-    # coll.delete_many({}) # все снести
+    # read_data(data) #импорт данных из csv в mongo
+    # coll.delete_many({}) # все снести из коллекции
+    # find_cheapest()
 
 if __name__ == '__main__':
     run()
