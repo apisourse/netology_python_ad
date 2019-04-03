@@ -22,6 +22,7 @@ def add_date():
 
 
 def run():
+    filename = 'artists.csv'
     pass
 
 if __name__ == '__main__':
