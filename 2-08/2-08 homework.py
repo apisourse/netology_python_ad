@@ -4,8 +4,8 @@ import json
 
 # Представим, что это тянется из фала Config
 database = 'postgres'
-user = 'artempakhomov'
-password = 'milk0990'
+user = 'login'
+password = 'pass'
 host = 'localhost'
 
 
