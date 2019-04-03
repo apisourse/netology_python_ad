@@ -2,13 +2,12 @@ from pprint import pprint
 import csv
 import pymongo
 from datetime import datetime
+import re
 
 # Config
 conn = pymongo.MongoClient('localhost', 27017)
 db = conn['iSourse']
 coll = db['netology_mongo']
-
-
 
 
 def read_csv(filename):
@@ -30,10 +29,18 @@ def read_data(data):
                              int(float(i[3])))
         })
 
+
 def find_cheapest():
     cheapest = coll.find().sort('Price', 1)
     for i in cheapest:
-        print(i['Price'], i['Artist'])
+        print(f'{i["Price"]}: {i["Artist"]} в {i["Place"]}')
+
+
+def find_by_name():
+    input_artist = input('Введите название артиста')
+    regex = re.compile()
+
+    find = coll.find({'Artist': "Tom"}).sort('Price', 1)
 
 
 def run():
@@ -42,6 +49,7 @@ def run():
     # read_data(data) #импорт данных из csv в mongo
     # coll.delete_many({}) # все снести из коллекции
     # find_cheapest()
+    find_by_name()
 
 if __name__ == '__main__':
     run()
