@@ -2,7 +2,7 @@ import csv
 from pymongo import MongoClient
 
 client = MongoClient()
-concerts_db = client.['concerts_db']
+concerts_db = client['concerts_db']
 
 def read_csv(filename):
     pass
