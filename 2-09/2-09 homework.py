@@ -23,23 +23,26 @@ def read_data(data, coll):
                              round(float(i[3]) % 1 * 100),
                              int(float(i[3])))
         })
+    print('OK! Data imported.')
 
 
 def find_cheapest(coll):
     cheapest = coll.find().sort('Price', 1)
     for i in cheapest:
-        print(f'{i["Price"]}: {i["Artist"]} в {i["Place"]}')
+        f = f'{i["Price"]}: {i["Artist"]} в {i["Place"]}'
+        yield f
 
 
 def find_by_name(name, coll):
     rx = r'.*' + f'{name}' + '.*'
     regex = re.compile(rx)
 
-    find = coll.find().p
+    find = coll.find()
     for i in find:
         result = re.match(regex, i['Artist'])
         if result:
-            print(f'{i["Artist"]} в {i["Place"]} за {i["Price"]}')
+            f = f'{i["Artist"]} в {i["Place"]} за {i["Price"]} фантиков'
+            yield f
 
 
 def run():
@@ -49,18 +52,22 @@ def run():
     coll = db['netology_mongo']
     data = read_csv('artists.csv')
 
-    # TODO 0: Delete
-    # coll.delete_many({}) # все снести из коллекции
+    # TODO 0:
+    # coll.delete_many({})
+    # for i in coll.find():
+    #     print(i)
 
     # TODO 1: импорт данных из csv
     # read_data(data, coll)
 
     # TODO 2: отсортировать билеты из базы по возрастания цены
-    # find_cheapest(coll)
+    # for i in find_cheapest(coll):
+    #     print(i)
 
-    # TODO 3: отсортировать билеты из базы по возрастания цены
-    looking = input("what you're looking for?: ")
-    find_by_name(looking, coll)
+    # TODO 3: найти билеты по исполнителю, где имя исполнителя может быть задано не полностью
+    # looking = input("what you're looking for?: ")
+    # for i in find_by_name(looking, coll):
+    #     print(i)
 
 
 if __name__ == '__main__':
