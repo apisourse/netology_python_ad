@@ -1,4 +1,3 @@
-from pprint import pprint
 import csv
 import pymongo
 from datetime import datetime
