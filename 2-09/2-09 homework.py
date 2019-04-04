@@ -32,8 +32,14 @@ def find_cheapest(coll):
 
 
 def find_by_name(name, coll):
-    regex = re.compile()
-    find = coll.find().sort('Price', 1)
+    rx = r'.*' + f'{name}' + '.*'
+    regex = re.compile(rx)
+
+    find = coll.find().p
+    for i in find:
+        result = re.match(regex, i['Artist'])
+        if result:
+            print(f'{i["Artist"]} в {i["Place"]} за {i["Price"]}')
 
 
 def run():
@@ -41,14 +47,20 @@ def run():
     conn = pymongo.MongoClient('localhost', 27017)
     db = conn['iSourse']
     coll = db['netology_mongo']
+    data = read_csv('artists.csv')
 
-
-    filename = 'artists.csv'
-    data = read_csv(filename)
+    # TODO 0: Delete
     # coll.delete_many({}) # все снести из коллекции
-    # read_data(data, coll) #импорт данных из csv
+
+    # TODO 1: импорт данных из csv
+    # read_data(data, coll)
+
+    # TODO 2: отсортировать билеты из базы по возрастания цены
     # find_cheapest(coll)
-    find_by_name('Чай', coll)
+
+    # TODO 3: отсортировать билеты из базы по возрастания цены
+    looking = input("what you're looking for?: ")
+    find_by_name(looking, coll)
 
 
 if __name__ == '__main__':
