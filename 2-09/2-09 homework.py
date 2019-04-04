@@ -53,11 +53,11 @@ def run():
 
     # TODO 0:
     # coll.delete_many({})
-    # for i in coll.find():
-    #     print(i)
 
     # TODO 1: импорт данных из csv
     # read_data(data, coll)
+    # for i in coll.find():
+    #     print(i)
 
     # TODO 2: отсортировать билеты из базы по возрастания цены
     # for i in find_cheapest(coll):
