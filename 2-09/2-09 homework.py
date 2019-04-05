@@ -34,7 +34,7 @@ def find_cheapest(coll):
 
 def find_by_name(name, coll):
     rx = r'.*' + f'{name}' + '.*'
-    regex = re.compile(rx)
+    regex = re.compile(rx, re.I)
 
     find = coll.find()
     for i in find:
@@ -58,15 +58,15 @@ def run():
     # read_data(data, coll)
     # for i in coll.find():
     #     print(i)
-
+    #
     # TODO 2: отсортировать билеты из базы по возрастания цены
     # for i in find_cheapest(coll):
     #     print(i)
 
     # TODO 3: найти билеты по исполнителю, где имя исполнителя может быть задано не полностью
-    # looking = input("what you're looking for?: ")
-    # for i in find_by_name(looking, coll):
-    #     print(i)
+    looking = input("what you're looking for?: ")
+    for i in find_by_name(looking, coll):
+        print(i)
 
 
 if __name__ == '__main__':
