@@ -1,27 +1,18 @@
 import csv
 import pymongo
-from datetime import datetime
 import re
 
 
 def read_csv(filename):
     with open(filename, encoding="utf-8") as f:
-        rows = csv.reader(f, delimiter=",")
+        rows = csv.DictReader(f, delimiter=",")
         next(rows)
         data = list(rows)
         return data
 
 
 def read_data(data, coll):
-    for i in data:
-        coll.insert_one({
-            'Artist': i[0],
-            'Price': float(i[1]),
-            'Place': i[2],
-            'Data': datetime(2019,
-                             round(float(i[3]) % 1 * 100),
-                             int(float(i[3])))
-        })
+    coll.insert_many(data)
     print('OK! Data imported.')
 
 
@@ -33,21 +24,19 @@ def find_cheapest(coll):
 
 
 def find_by_name(name, coll):
-    rx = r'.*' + f'{name}' + '.*'
+    rx = r'.*{}.*'.format(name)
     regex = re.compile(rx, re.I)
-
-    find = coll.find()
+    searchquery = {'Artist': {'$regex': regex}}
+    find = coll.find(searchquery)
     for i in find:
-        result = re.match(regex, i['Artist'])
-        if result:
-            f = f'{i["Artist"]} в {i["Place"]} за {i["Price"]} фантиков'
-            yield f
+        f = f'{i["Artist"]} в {i["Place"]} за {i["Price"]} фантиков'
+        yield f
 
 
 def run():
     # Config
     conn = pymongo.MongoClient('localhost', 27017)
-    db = conn['iSourse']
+    db = conn['Base_name']
     coll = db['netology_mongo']
     data = read_csv('artists.csv')
 
@@ -64,9 +53,9 @@ def run():
     #     print(i)
 
     # TODO 3: найти билеты по исполнителю, где имя исполнителя может быть задано не полностью
-    looking = input("what you're looking for?: ")
-    for i in find_by_name(looking, coll):
-        print(i)
+    # looking = input("what you're looking for?: ")
+    # for i in find_by_name(looking, coll):
+    #     print(i)
 
 
 if __name__ == '__main__':
