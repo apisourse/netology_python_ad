@@ -6,7 +6,6 @@ import re
 def read_csv(filename):
     with open(filename, encoding="utf-8") as f:
         rows = csv.DictReader(f, delimiter=",")
-        next(rows)
         data = list(rows)
         return data
 
@@ -24,8 +23,8 @@ def find_cheapest(coll):
 
 
 def find_by_name(name, coll):
-    rx = r'.*{}.*'.format(name)
-    regex = re.compile(rx, re.I)
+    rx = re.escape(name)
+    regex = re.compile(rf'\w*{rx}\w*', re.I)
     searchquery = {'Artist': {'$regex': regex}}
     find = coll.find(searchquery)
     for i in find:
